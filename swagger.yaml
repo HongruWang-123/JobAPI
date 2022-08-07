@@ -1,0 +1,215 @@
+openapi: 3.0.0
+info:
+  title: Job API
+  contact: {}
+  version: '1.0'
+servers:
+- url: https://job-api-12586.herokuapp.com/api/v1
+  variables: {}
+paths:
+  /register:
+    post:
+      tags:
+      - Auth
+      summary: register
+      operationId: register
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/registerrequest'
+            example:
+              name: Bob
+              email: Bob7@gmail.com
+              password: 123456
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /login:
+    post:
+      tags:
+      - Auth
+      summary: login
+      operationId: login
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginrequest'
+            example:
+              email: peter7@google.com
+              password: '123456'
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security: []
+  /job:
+    post:
+      tags:
+      - Job
+      summary: createJob
+      operationId: createJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createJobRequest'
+            example:
+              company: facebook
+              position: intern
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    get:
+      tags:
+      - Job
+      summary: findAllJobs
+      operationId: findAllJobs
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+  /job/{id}:
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+        description: The job ID
+    get:
+      tags:
+      - Job
+      summary: FindAJob
+      operationId: FindAJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+
+    patch:
+      tags:
+      - Job
+      summary: UpdateAJob
+      operationId: UpdateAJob
+      parameters: []
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAJobRequest'
+            example:
+              company: ''
+              position: manager
+        required: true
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+    delete:
+      tags:
+      - Job
+      summary: DeleteJob
+      operationId: DeleteJob
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          headers: {}
+      deprecated: false
+      security:
+      - bearer: []
+components:
+  schemas:
+    registerrequest:
+      title: registerrequest
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+      example:
+        name: peter
+    loginrequest:
+      title: loginrequest
+      required:
+      - email
+      - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      example:
+        email: peter7@google.com
+        password: '123456'
+    createJobRequest:
+      title: createJobRequest
+      required:
+      - company
+      - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: facebook
+        position: intern
+    UpdateAJobRequest:
+      title: UpdateAJobRequest
+      required:
+      - company
+      - position
+      type: object
+      properties:
+        company:
+          type: string
+        position:
+          type: string
+      example:
+        company: ''
+        position: manager
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+- name: Auth
+  description: ''
+- name: Job
+  description: ''

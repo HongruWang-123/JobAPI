@@ -4,7 +4,10 @@ require('express-async-errors');
 const helmet = require('helmet');
 const cors = require('cors');
 const xss = require('xss-clean');
-const ratelimit = require('express-rate-limit')
+const ratelimit = require('express-rate-limit');
+const yaml = require('yamljs');
+const swaggerUI = require('swagger-ui-express');
+const doc = yaml.load('./swagger.yaml');
 const express = require('express');
 const app = express();
 //middleware
@@ -27,8 +30,9 @@ app.use(cors());
 app.use(xss());
 
 app.get('/',(req,res) => {
-    res.send('job api');
+    res.send('<h1>Job API</h1><a href = "/api-doc">Documentation</a>');
 })
+app.use('/api-doc',swaggerUI.serve, swaggerUI.setup(doc));
 app.use('/api/v1',router);
 
 app.use(routeNotFound);
